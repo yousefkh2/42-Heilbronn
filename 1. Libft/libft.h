@@ -1,7 +1,9 @@
 #ifndef LIBFT_H
 #define LIBFT_H
 
+#include <stdlib.h>
 #include <stddef.h>  // for size_t
+#include <unistd.h>
 
 // Memory functions
 void    *ft_memset(void *s, int c, size_t n);
