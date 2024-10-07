@@ -1,3 +1,6 @@
+#include "libft.h"
+#include <stdlib.h>
+
 int get_num_len(int n)
 {
 	int len = 0;
