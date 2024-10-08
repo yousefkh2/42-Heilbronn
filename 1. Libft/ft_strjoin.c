@@ -2,22 +2,13 @@
 
 char *ft_strjoin(char const *s1, char const *s2)
 {
-	//get total length
-	int len = 0;
-	int count = 0;
-	const char *temp_s1 = s1;
-	const char *temp_s2 = s2;
+	if (!s1 || !s2)
+        return NULL;
 
-	while (*temp_s1++)
-	{
-		len++;
-	}
-	while (*temp_s2++)
-	{
-		len++;
-	}
+	int len1 = ft_strlen(s1);
+    int len2 = ft_strlen(s2);
 
-	char *result = (char *)malloc(len + 1);
+	char *result = (char *)malloc(len1 + len2 + 1);
 	if (!result)
 		return NULL;
 	
