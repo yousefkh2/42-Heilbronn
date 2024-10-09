@@ -1,50 +1,51 @@
-// just some touches remain (not complete)
-// "world"
-// "hello world"
+#include <stddef.h> // For size_t
 
+char *strnstr(const char *haystack, const char *needle, size_t len) {
+    // If needle is an empty string, return haystack
+    if (*needle == '\0') {
+        return (char *)haystack;
+    }
 
-#include <stddef.h>
+    size_t i = 0;
 
-char *strnstr(const char *haystack, const char *needle, size_t len)
+    // Iterate over haystack up to 'len' characters
+    while (haystack[i] != '\0' && i < len) {
+        // If current character matches the first character of needle
+        if (haystack[i] == needle[0]) {
+            size_t j = 1;
 
-{
-	int count = 0;
-	char *strt_needle = needle;
-	char *moving_haystack;
-	char *returned_pointer = haystack;
+            // Initialize a variable to track the position in haystack
+            size_t k = i + 1;
 
-	if (!*needle)
-	{
-		return haystack;
-	}
-	while (*haystack && count < len)
-	{
-		moving_haystack = haystack;
+            // Compare the subsequent characters
+            while (needle[j] != '\0' && k < len && haystack[k] == needle[j]) {
+                j++;
+                k++;
+            }
 
-		if (*needle == *moving_haystack)
-		{
-			strt_needle = needle;
-			returned_pointer = moving_haystack;
-			while (*strt_needle == *moving_haystack)
-			{
-				strt_needle++;
-				moving_haystack++;
+            // If we've reached the end of needle, a match is found
+            if (needle[j] == '\0') {
+                return (char *)&haystack[i];
+            }
+        }
+        i++;
+    }
 
-				if (*strt_needle == '\0')
-				{
-				//return the needle in the haystack. it is a pointer in the haystack
-				return returned_pointer;
-				}
-			}
-		}
-		
-		haystack++;
-		count++;
-	}
-	return NULL;
-	
-	//pointer to the first letter in needle (will move as long as they are equal) /
-	// if false positive, will return again to the first letter (or make it two pointers?)
-	//moving pointer on haystack 
+    // If no match is found, return NULL
+    return NULL;
+}
 
+#include <stdio.h>
+
+int main() {
+    const char *text = "Hello, World!";
+    const char *search = "World";
+    char *result = strnstr(text, search, 12); // Limit search to first 12 characters
+
+    if (result)
+        printf("Found '%s' at position: %ld\n", search, result - text);
+    else
+        printf("'%s' not found within the first 12 characters.\n", search);
+
+    return 0;
 }
