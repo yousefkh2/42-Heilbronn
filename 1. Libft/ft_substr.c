@@ -1,31 +1,27 @@
-// I need to do it two more times.
+#include <stddef.h>
+#include "libft.h"
 
 char *ft_substr(char const *s, unsigned int start, size_t len)
-{
-	if (!s)
-		return NULL;
-	
-	//allocate memory
-	char *result = (char *)malloc(len + 1); // for the null terminator
+{	
+	size_t s_len;
+    char *substr;
 
-	if (!result)
-		return NULL;
-	//check if 'start' is beyond the string length
-	size_t str_len = ft_strlen(s);
-	if (start >= str_len)
-	{
-		result[0] = '\0';
-		return result;
-	}
-	
-	//we will need index navigating
-	size_t i = 0;
-	while (i < len && s[start + i])
-	{
-		result[i] = s[start + i];
-		i++;
-	}
+    if (!s)
+        return NULL;
 
-	result[i] = '\0';
-	return result;
+    s_len = ft_strlen(s);
+
+    if (start >= s_len)
+        return malloc(1); // Return an empty string
+
+    // Adjust len if it exceeds the string length
+    if (start + len > s_len)
+        len = s_len - start;
+
+    substr = (char *)malloc(len + 1);
+    if (!substr)
+        return NULL;
+
+    ft_strlcpy(substr, s + start, len + 1);
+    return substr;
 }

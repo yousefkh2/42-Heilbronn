@@ -1,16 +1,13 @@
+#include <stddef.h>
 
-
-int ft_strncmp(char *str1, char *str2, int n)
+int ft_strncmp(const char *str1, const char *str2, size_t n)
 {
-	int count = 0;
-	while (*str1 && *str2 && count < n); 
+	size_t count = 0;
+	while (*str1 && *str2 && count < n)
 	{
 		if (*str1 != *str2)
 		{
-			if (*str1 > *str2)
-				return 1;
-			else
-				return -1; 
+			return ((unsigned char)*str1 - (unsigned char)*str2);
 		}
 		str1++;
 		str2++;
@@ -18,9 +15,7 @@ int ft_strncmp(char *str1, char *str2, int n)
 	}
 	if (count < n)
 	{
-		if (*str1)
-			return 1;
-		if (*str2)
-			return -1;
+		return ((unsigned char)*str1 - (unsigned char)*str2);
 	}
+	return 0;
 }
