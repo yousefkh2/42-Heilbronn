@@ -1,7 +1,7 @@
 #include <stddef.h>
 #include "libft.h"
 
-void *memchr(const void *ptr, int value, size_t n)
+void *ft_memchr(const void *ptr, int value, size_t n)
 {
 	size_t limit = 0;
 	const unsigned char *p = (const unsigned char *)ptr;

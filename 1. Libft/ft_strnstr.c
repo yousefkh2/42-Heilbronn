@@ -1,6 +1,6 @@
 #include <stddef.h> // For size_t
 
-char *strnstr(const char *haystack, const char *needle, size_t len) {
+char *ft_strnstr(const char *haystack, const char *needle, size_t len) {
     // If needle is an empty string, return haystack
     if (*needle == '\0') {
         return (char *)haystack;
