@@ -1,36 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/10 20:35:17 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/11 18:57:22 by ykhattab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h> // For size_t
 
-char *ft_strnstr(const char *haystack, const char *needle, size_t len) {
-    // If needle is an empty string, return haystack
-    if (*needle == '\0') {
-        return (char *)haystack;
-    }
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
+{
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
-    size_t i = 0;
-
-    // Iterate over haystack up to 'len' characters //
-    while (haystack[i] != '\0' && i < len) {
-        // If current character matches the first character of needle
-        if (haystack[i] == needle[0]) {
-            size_t j = 1;
-
-            // Initialize a variable to track the position in haystack
-            size_t k = i + 1;
-
-            // Compare the subsequent characters
-            while (needle[j] != '\0' && k < len && haystack[k] == needle[j]) {
-                j++;
-                k++;
-            }
-
-            // If we've reached the end of needle, a match is found
-            if (needle[j] == '\0') {
-                return (char *)&haystack[i];
-            }
-        }
-        i++;
-    }
-
-    // If no match is found, return NULL
-    return NULL;
+	if (*needle == '\0')
+		return ((char *)haystack);
+	i = 0;
+	while (haystack[i] != '\0' && i < len)
+	{
+		if (haystack[i] == needle[0])
+		{
+			j = 1;
+			k = i + 1;
+			while (needle[j] != '\0' && k < len && haystack[k] == needle[j])
+			{
+				j++;
+				k++;
+			}
+			if (needle[j] == '\0')
+				return ((char *)&haystack[i]);
+		}
+		i++;
+	}
+	return (NULL);
 }

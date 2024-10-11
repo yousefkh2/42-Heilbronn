@@ -6,32 +6,36 @@
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 19:54:11 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/07 19:54:13 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:34:37 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "libft.h"
 
-int ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int sign = 1;
-	int result = 0;
+	int	sign;
+	int	result;
 
-	while (*str == ' ' || *str == '\t' || *str == '\n') 
+	sign = 1;
+	result = 0;
+	while (*str == ' ' || *str == '\t' || *str == '\n'
+		|| *str == '\v' || *str == '\f' || *str == '\r')
 	{
-	str++;
+		str++;
 	}
-	if (*str == '-' || *str == '+') {
-		if (*str == '-') {
-		sign = -1;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+		{
+			sign = -1;
+		}
+		str++;
 	}
-	str++;
-}
-	while (*str && ft_isdigit(*str)) 
+	while (*str && ft_isdigit(*str))
 	{
 		result = result * 10 + (*str - '0');
 		str++;
 	}
-	return sign * result;
+	return (sign * result);
 }

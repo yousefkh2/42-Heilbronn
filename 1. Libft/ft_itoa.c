@@ -1,56 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/11 17:00:00 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/11 20:48:19 by ykhattab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include <stdlib.h>
 
-int get_num_len(int n)
+static int	get_num_len(long n)
 {
-	int len = 0;
+	int	len;
 
-	if (n == 0)
-		return 1;
-
-	if (n < 0)
-    {
-        len++;  // for the '-' sign
-        n = -n;  // work with absolute value
-    }
-	while (n != 0)
+	len = 0;
+	if (n <= 0)
+		len = 1;
+	while (n)
 	{
-		len++;
 		n /= 10;
+		len++;
 	}
-	return len;
+	return (len);
 }
 
-char *ft_itoa(int n)
+static void	fill_str(char *str, long num, int len)
 {
-	int len = get_num_len(n);
-	char *str;
-	long num = n;  // long to handle INT_MIN
-
-	str = (char *)malloc(len + 1);
-	if (!str)
-		return NULL;
-
 	str[len] = '\0';
-
-	if (n == 0)
-	{
+	if (num == 0)
 		str[0] = '0';
-		return str;
-	}
-
-	//handle negative numbers
 	if (num < 0)
 	{
 		str[0] = '-';
 		num = -num;
 	}
-
-	//convert digits from the end of the string backwards
 	while (num > 0)
 	{
 		str[--len] = (num % 10) + '0';
 		num /= 10;
 	}
-	return str;
+}
+
+char	*ft_itoa(int n)
+{
+	char	*str;
+	int		len;
+	long	num;
+
+	num = n;
+	len = get_num_len(num);
+	str = (char *)malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	fill_str(str, num, len);
+	return (str);
 }

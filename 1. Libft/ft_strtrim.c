@@ -1,51 +1,81 @@
-#include <stddef.h>   // For size_t
-#include <stdlib.h>   // For malloc
-#include "libft.h"    // For ft_strlcpy, ft_strlen, ft_memcpy
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/11 16:29:46 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/11 19:36:50 by ykhattab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "libft.h"
+#include <stdlib.h>
 
-static int is_in_set(char c, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-    while (*set)
-    {
-        if (c == *set)
-            return 1;
-        set++;
-    }
-    return 0;
+	char	*trimmed_str;
+	size_t	start;
+	size_t	end;
+	size_t	len;
+
+	if (!s1 || !set)
+		return (NULL);
+	start = 0;
+	while (s1[start] && ft_strchr(set, s1[start]))
+		start++;
+	end = ft_strlen(s1);
+	while (end > start && ft_strchr(set, s1[end - 1]))
+		end--;
+	len = end - start;
+	trimmed_str = (char *)malloc(len + 1);
+	if (!trimmed_str)
+		return (NULL);
+	ft_strlcpy(trimmed_str, &s1[start], len + 1);
+	return (trimmed_str);
 }
 
-char *ft_strtrim(char const *s1, char const *set)
-{
-    if (s1 == NULL || set == NULL)
-        return NULL;
+// strchr instead of is_in_set()
 
-    const char *start = s1;
-    const char *end = s1 + ft_strlen(s1) - 1;
+// static int	is_in_set(char c, char const *set)
+// {
+// 	while (*set)
+// 	{
+// 		if (c == *set)
+// 			return (1);
+// 		set++;
+// 	}
+// 	return (0);
+// }
 
-    // Move start pointer to the first character not in set
-    while (*start && is_in_set(*start, set))
-        start++;
+// char	*ft_strtrim(char const *s1, char const *set)
+// {
+// 	const char	*start;
+// 	const char	*end;
+// 	char		*empty;
+// 	size_t		trimmed_len;
+// 	char		*trimmed_str;
 
-    if (*start == '\0')
-    {
-        char *empty = malloc(1);
-        if (empty)
-            empty[0] = '\0';
-        return empty;
-    }
-
-    // Move end pointer to the last character not in set
-    while (end > start && is_in_set(*end, set))
-        end--;
-
-    // Calculate the length of the trimmed string + allocate memory
-    size_t trimmed_len = end - start + 1;
-    char *trimmed_str = malloc(trimmed_len + 1);
-    if (trimmed_str == NULL)
-        return NULL;
-
-    // Copy the trimmed substring into the new memory using ft_strlcpy
-    ft_strlcpy(trimmed_str, start, trimmed_len + 1);
-
-    return trimmed_str;
-}
+// 	if (s1 == NULL || set == NULL)
+// 		return (NULL);
+// 	start = s1;
+// 	end = s1 + ft_strlen(s1) - 1;
+// 	while (*start && is_in_set(*start, set))
+// 		start++;
+// 	if (*start == '\0')
+// 	{
+// 		empty = malloc(1);
+// 		if (empty)
+// 			empty[0] = '\0';
+// 		return (empty);
+// 	}
+// 	while (end > start && is_in_set(*end, set))
+// 		end--;
+// 	trimmed_len = end - start + 1;
+// 	trimmed_str = malloc(trimmed_len + 1);
+// 	if (trimmed_str == NULL)
+// 		return (NULL);
+// 	ft_strlcpy(trimmed_str, start, trimmed_len + 1);
+// 	return (trimmed_str);
+// }

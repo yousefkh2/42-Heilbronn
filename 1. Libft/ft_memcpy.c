@@ -3,25 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yourusername <youremail@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: YYYY/MM/DD HH:MM:SS by yourusername      #+#    #+#             */
-/*   Updated: YYYY/MM/DD HH:MM:SS by yourusername     ###   ########.fr       */
+/*   Created: 2024/10/11 16:22:52 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/11 17:23:58 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * Copies 'n' bytes from memory area 'src' to memory area 'dest'.
- * The memory areas must not overlap.
- *
- * @param dest Pointer to the destination array where the content is to be copied.
- * @param src Pointer to the source of data to be copied.
- * @param n Number of bytes to copy.
- *
- * @return A pointer to the destination string 'dest'.
- */
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
 	size_t				count;

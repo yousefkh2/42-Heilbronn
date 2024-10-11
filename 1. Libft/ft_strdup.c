@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 17:03:33 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/11 19:36:18 by ykhattab         ###   ########.fr       */
+/*   Created: 2024/10/11 17:03:09 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/11 18:43:21 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-char	*ft_strrchr(const char *str, int c)
+char	*ft_strdup(const char *s)
 {
-	const char		*last_occurrence;
-	unsigned char	uc;
+	size_t	len;
+	char	*dup;
+	size_t	i;
 
-	last_occurrence = NULL;
-	uc = (unsigned char)c;
-	while (*str)
+	len = ft_strlen(s) + 1;
+	dup = (char *)malloc(len * sizeof(char));
+	if (dup == NULL)
+		return (NULL);
+	i = 0;
+	while (i < len)
 	{
-		if ((unsigned char)*str == uc)
-		{
-			last_occurrence = str;
-		}
-		str++;
+		dup[i] = s[i];
+		i++;
 	}
-	if (uc == '\0')
-	{
-		return ((char *)str);
-	}
-	return ((char *)last_occurrence);
+	return (dup);
 }

@@ -1,18 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/11 16:19:56 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/11 17:58:09 by ykhattab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
-void ft_putnbr_fd(int n, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	if (n == -2147483648)  // Special case for the minimum value of int
+	if (n == -2147483648)
 	{
 		write(fd, "-2147483648", 11);
-		return;
+		return ;
 	}
 	if (n < 0)
 	{
-		ft_putchar_fd('-', fd);  // Output the negative sign
+		ft_putchar_fd('-', fd);
 		n = -n;
 	}
 	if (n > 9)
-		ft_putnbr_fd(n / 10, fd);  // Recursive call to handle the rest of the digits
-	ft_putchar_fd((n % 10) + '0', fd);  // Output the last digit
+		ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd((n % 10) + '0', fd);
 }
