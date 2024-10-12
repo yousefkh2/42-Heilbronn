@@ -6,7 +6,7 @@
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 16:19:35 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/11 18:40:51 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/12 22:15:06 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,3 @@ char	*ft_strchr(const char *str, int c)
 	}
 	return (NULL);
 }
-// the casting here is important, i didn't put it at the beginning, and I still
-// can't do it in the exam.

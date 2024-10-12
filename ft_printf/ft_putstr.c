@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_unsigned.c                                  :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/12 20:22:11 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/12 20:22:49 by ykhattab         ###   ########.fr       */
+/*   Created: 2024/10/12 20:20:04 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/12 20:42:49 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	print_unsigned_recursive(unsigned int num)
+int	ft_putstr(char *str)
 {
 	int	len;
 
 	len = 0;
-	if (num >= 10)
-		len += print_unsigned_recursive(num / 10);
-	len += ft_putchar((num % 10) + '0');
+	if (!str)
+		str = "(null)";
+	while (str[len])
+	{
+		ft_putchar(str[len]);
+		len++;
+	}
 	return (len);
-}
-
-int	handle_unsigned(va_list args)
-{
-	unsigned int num = va_arg(args, unsigned int);
-
-	return (print_unsigned_recursive(num));
 }

@@ -1,29 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_int.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 15:48:31 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/12 20:42:46 by ykhattab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
-int print_int_recursive(int num)
+int	print_int_recursive(int num)
 {
-	int len = 0;
+	int	len;
+
+	len = 0;
+	if (num == -2147483648)
+		return (ft_putstr("-2147483648"));
 	if (num < 0)
 	{
 		len += ft_putchar('-');
-		if (num == -2147483648)
-		{
-			len += ft_putstr_fd("2147483648", 1);
-			return len;
-		}
-			num = -num;
+		num = -num;
 	}
 	if (num >= 10)
-	{
 		len += print_int_recursive(num / 10);
-	}
 	len += ft_putchar((num % 10) + '0');
-	return len;
+	return (len);
 }
 
 int handle_int(va_list args)
 {
 	int num = va_arg(args, int);
-	
-	return print_int_recursive(num);
+	return (print_int_recursive(num));
+}
+
+
+// int	handle_int(va_list args)
+// {
+// 	int	num;
+
+// 	num = va_arg(args, int);
+// 	return (print_int_recursive(num));
+// }
+
+#include <stdio.h>
+int main()
+{
+	int n = print_int_recursive(123);
+	printf("here it is: %i", n);
 }

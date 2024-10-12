@@ -1,16 +1,21 @@
-int handle_string(va_list args)
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_string.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/12 16:11:17 by ykhattab          #+#    #+#             */
+/*   Updated: 2024/10/12 20:42:50 by ykhattab         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf.h"
+
+int	handle_string(va_list args)
 {
-    char *str = va_arg(args, char *);
-	int len = 0;
+	char	*str;
 
-	if (!str)
-		str = "(null)";
-
-	
-	while (str[len])
-	{
-		ft_putchar(str[len]);
-		len++;
-	}
-    return len;
+	str = va_arg(args, char *);
+	return (ft_putstr(str));
 }
