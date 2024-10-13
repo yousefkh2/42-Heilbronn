@@ -7,6 +7,7 @@ RM = rm -f
 
 SRCS = ft_printf.c \
        ft_putchar.c \
+       ft_putstr.c \
        handle_char.c \
        handle_string.c \
        handle_pointer.c \

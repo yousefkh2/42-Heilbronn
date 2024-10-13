@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pointer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 20:23:05 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/12 21:39:04 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/13 02:05:58 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	print_pointer_recursive(unsigned long num)
 	{
 		len += print_pointer_recursive(num / 16);
 	}
-	len += ft_putchar_fd(digits[num % 16], 1);
+	len += ft_putchar(digits[num % 16]);
 	return (len);
 }
 
@@ -35,7 +35,7 @@ int	handle_pointer(va_list args)
 
 	if (!ptr)
 	{
-		len += ft_putstr("(null)");
+		len += ft_putstr("(nil)");
 		return (len);
 	}
 

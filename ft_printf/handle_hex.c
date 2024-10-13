@@ -3,31 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   handle_hex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:49:11 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/12 20:07:31 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/13 03:09:52 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
 int	print_hex_recursive(unsigned int num, int uppercase)
-	//how does this uppercase parameter work? can you help me imagine it?
 {
-	int len = 0;
-	char *digits = uppercase ? "0123456789ABCDEF" : "0123456789abcdef";
-	if (num >= 16)
-	{
-		len += print_hex_recursive(num / 16, uppercase);
-		len += print_hex_recursive(num % 16, uppercase);
-	}
-	else
-	{
-		len += ft_putchar(digits[num]);
-	}
-	return (len);
+    int	len = 0;
+    char	*digits = uppercase ? "0123456789ABCDEF" : "0123456789abcdef";
+
+    if (num >= 16)
+    {
+        len += print_hex_recursive(num / 16, uppercase);
+    }
+    len += ft_putchar(digits[num % 16]);
+    return (len);
 }
+
 
 int	handle_hex(va_list args, char specifier)
 {

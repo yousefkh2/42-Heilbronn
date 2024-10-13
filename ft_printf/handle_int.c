@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_int.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 15:48:31 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/12 20:42:46 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/13 03:04:57 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int handle_int(va_list args)
 // 	return (print_int_recursive(num));
 // }
 
-#include <stdio.h>
-int main()
-{
-	int n = print_int_recursive(123);
-	printf("here it is: %i", n);
-}
+// #include <stdio.h>
+// int main()
+// {
+// 	int n = print_int_recursive(123);
+// 	printf("here it is: %i", n);
+// }
