@@ -6,7 +6,7 @@
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 20:20:04 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/12 20:42:49 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/15 22:14:04 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,21 @@
 
 int	ft_putstr(char *str)
 {
+	int i;
 	int	len;
+	int result;
 
+	i = 0;
 	len = 0;
 	if (!str)
 		str = "(null)";
-	while (str[len])
+	while (str[i])
 	{
-		ft_putchar(str[len]);
-		len++;
+		result = ft_putchar(str[i]);
+		if (result == -1)
+			return (-1);
+		len += result;
+		i++;
 	}
 	return (len);
 }

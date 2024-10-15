@@ -6,11 +6,11 @@
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 20:35:17 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/11 18:57:22 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/13 14:49:07 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h> // For size_t
+#include <stddef.h>
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {

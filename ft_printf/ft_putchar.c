@@ -6,7 +6,7 @@
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 15:46:36 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/12 20:16:34 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/15 22:07:21 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,8 @@
 
 int	ft_putchar(char c)
 {
-	return write(1, &c, 1);
+	int result = write(1, &c, 1);
+	if (result == -1)
+		return -1;
+	return result;
 }

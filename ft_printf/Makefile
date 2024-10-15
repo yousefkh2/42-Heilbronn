@@ -1,38 +1,25 @@
-NAME = libftprintf.a
-
+# Variables
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-AR = ar rcs
-RM = rm -f
-
-SRCS = ft_printf.c \
-       ft_putchar.c \
-       ft_putstr.c \
-       handle_char.c \
-       handle_string.c \
-       handle_pointer.c \
-       handle_int.c \
-       handle_unsigned.c \
-       handle_hex.c
-
+SRCS = ft_printf.c ft_putchar.c ft_putstr.c handle_char.c handle_hex.c handle_int.c handle_pointer.c handle_string.c handle_unsigned.c
 OBJS = $(SRCS:.c=.o)
+NAME = libftprintf.a
 
-INCLUDES = -I.
-
+# Rules
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(AR) $(NAME) $(OBJS)
-
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+		ar rcs $(NAME) $(OBJS)
 
 clean:
-	$(RM) $(OBJS)
+		rm -f $(OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+		rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+test: all
+	$(CC) $(CFLAGS) main.c libftprintf.a -o test_ft_printf
+
+.PHONY: all clean fclean re test

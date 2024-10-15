@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pointer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 20:23:05 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/13 02:05:58 by yousef           ###   ########.fr       */
+/*   Updated: 2024/10/15 23:13:01 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,52 @@
 int	print_pointer_recursive(unsigned long num)
 {
 	int		len;
+	int		result;
 	char	*digits;
 
 	len = 0;
 	digits = "0123456789abcdef";
 	if (num >= 16)
 	{
-		len += print_pointer_recursive(num / 16);
+		result = print_pointer_recursive(num / 16);
+		if (result == -1)
+			return (-1);
+		len += result;
 	}
-	len += ft_putchar(digits[num % 16]);
+	result = ft_putchar(digits[num % 16]);
+	if (result == -1)
+		return (-1);
+	len += result;
 	return (len);
 }
+
 
 int	handle_pointer(va_list args)
 {
-	void *ptr = va_arg(args, void *);
-	unsigned long addr = (unsigned long)ptr;
-	int len = 0;
+	void			*ptr;
+	unsigned long	addr;
+	int				len;
+	int				result;
 
+	ptr = va_arg(args, void *);
+	addr = (unsigned long)ptr;
+	len = 0;
 	if (!ptr)
 	{
-		len += ft_putstr("(nil)");
+		result = ft_putstr("0x0");
+		if (result == -1)
+			return (-1);
+		len += result;
 		return (len);
 	}
-
-	len += ft_putstr("0x");
-	len += print_pointer_recursive(addr);
+	result = ft_putstr("0x");
+	if (result == -1)
+		return (-1);
+	len += result;
+	result = print_pointer_recursive(addr);
+	if (result == -1)
+		return (-1);
+	len += result;
 	return (len);
 }
+
