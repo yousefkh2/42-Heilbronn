@@ -6,7 +6,7 @@
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 20:20:04 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/15 22:14:04 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:32:36 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	ft_putstr(char *str)
 {
-	int i;
+	int	i;
 	int	len;
-	int result;
+	int	result;
 
 	i = 0;
 	len = 0;

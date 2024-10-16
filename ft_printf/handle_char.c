@@ -6,7 +6,7 @@
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:47:42 by ykhattab          #+#    #+#             */
-/*   Updated: 2024/10/15 21:59:29 by ykhattab         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:33:30 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ int	handle_char(va_list args)
 	c = (char)va_arg(args, int);
 	result = ft_putchar(c);
 	if (result == -1)
-		return -1;
+		return (-1);
 	return (result);
 }
