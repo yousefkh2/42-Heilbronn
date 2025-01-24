@@ -6,7 +6,7 @@
 /*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:16 by yousef            #+#    #+#             */
-/*   Updated: 2025/01/24 11:54:23 by yousef           ###   ########.fr       */
+/*   Updated: 2025/01/24 15:07:30 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ void print_status(t_data *data, int philosopher_id, char *status)
     pthread_mutex_unlock(&data->print_mutex);
 }
 
+/**
+ * philo_sleep - Makes the philosopher sleep for a specified amount of time.
+ * 
+ * This function puts the philosopher to sleep for the given duration in milliseconds.
+ * During the sleep period, it periodically checks if the simulation has been stopped.
+ * If the simulation is stopped, the function will break out of the sleep loop early.
+ * The sleep is performed in increments of 100 microseconds to allow frequent checks.
+ * 
+ * @param data: Pointer to the shared data structure containing simulation state.
+ * @param sleep_time_ms: The duration of sleep in milliseconds.
+ */
 void philo_sleep(t_data *data, long sleep_time_ms)
 {
     long wake_up = get_current_time(data) + sleep_time_ms;
@@ -55,7 +66,7 @@ void philo_sleep(t_data *data, long sleep_time_ms)
         pthread_mutex_unlock(&data->stop_mutex);
         if (stop)
             break;
-        usleep(100); // Sleep in small increments
+        usleep(100); // sleep in increments of 100 microseconds
     }
 }
 

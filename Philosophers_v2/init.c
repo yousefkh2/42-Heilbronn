@@ -6,7 +6,7 @@
 /*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:35 by yousef            #+#    #+#             */
-/*   Updated: 2025/01/24 12:23:49 by yousef           ###   ########.fr       */
+/*   Updated: 2025/01/24 14:35:52 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int initialize_philosophers(t_data *data)
 		}
 	gettimeofday(&data->time_start, NULL);
 	data->start_time = data->time_start.tv_sec * 1000 + data->time_start.tv_usec / 1000;
-	printf("Start time: %ld\n", data->start_time);
 	i = 0;
     while (i < data->number_of_philosophers)
     {
