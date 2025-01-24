@@ -31,6 +31,7 @@ typedef struct s_data
     long            time_to_sleep;
     int             number_of_times_each_philosopher_must_eat;
     long            start_time;
+	struct timeval	time_start;
     int             simulation_stopped;
     pthread_mutex_t stop_mutex;
     pthread_mutex_t *forks;

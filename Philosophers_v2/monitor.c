@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:45 by yousef            #+#    #+#             */
-/*   Updated: 2024/12/15 01:18:39 by yousef           ###   ########.fr       */
+/*   Updated: 2025/01/23 23:11:26 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void *check_philosophers(void *arg)
 
     while (1)
     {
-        for (i = 0; i < data->number_of_philosophers; i++)
+		i = 0;
+        while (i < data->number_of_philosophers)
         {
             pthread_mutex_lock(&data->philosophers[i].meal_mutex);
             current_time = get_current_time();
@@ -37,6 +38,7 @@ void *check_philosophers(void *arg)
                 return NULL;
             }
             pthread_mutex_unlock(&data->philosophers[i].meal_mutex);
+			i++;
         }
 
         if (data->number_of_times_each_philosopher_must_eat != -1)

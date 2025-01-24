@@ -3,23 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:16 by yousef            #+#    #+#             */
-/*   Updated: 2024/12/15 02:33:16 by yousef           ###   ########.fr       */
+/*   Updated: 2025/01/24 01:07:12 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
 // Function to get the current timestamp in milliseconds
-long get_current_time(void)
+long get_current_time(t_data *data)
 {
-    struct timeval time;
+    struct timeval current;
+    long now;
 
-    gettimeofday(&time, NULL);
-    return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+    gettimeofday(&current, NULL);
+    now = current.tv_sec * 1000 + current.tv_usec / 1000;
+    return (now - data->start_time); 
 }
+//
 
 // Function to print philosopher status with synchronized access
 void print_status(t_data *data, int philosopher_id, char *status)
@@ -37,15 +40,15 @@ void print_status(t_data *data, int philosopher_id, char *status)
     }
     pthread_mutex_unlock(&data->stop_mutex);
 
-    timestamp = get_current_time() - data->start_time;
+    timestamp = get_current_time(data) - data->start_time;
     printf("%ld %d %s\n", timestamp, philosopher_id, status);
     pthread_mutex_unlock(&data->print_mutex);
 }
 
 void philo_sleep(t_data *data, long sleep_time_ms)
 {
-    long wake_up = get_current_time() + sleep_time_ms;
-    while (get_current_time() < wake_up)
+    long wake_up = get_current_time(data) + sleep_time_ms;
+    while (get_current_time(data) < wake_up)
     {
         pthread_mutex_lock(&data->stop_mutex);
         int stop = data->simulation_stopped;
@@ -56,8 +59,8 @@ void philo_sleep(t_data *data, long sleep_time_ms)
     }
 }
 
-void sim_start_delay(long start_time)
-{
-    while (get_current_time() < start_time)
-        usleep(100);
-}
+// void sim_start_delay(t_data *data, long start_time)
+// {
+//     while (get_current_time(data) < start_time)
+//         usleep(100);
+// }

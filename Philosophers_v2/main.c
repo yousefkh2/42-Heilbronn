@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:34:05 by yousef            #+#    #+#             */
-/*   Updated: 2024/12/15 02:57:22 by yousef           ###   ########.fr       */
+/*   Updated: 2025/01/20 15:06:40 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,10 @@ int main(int argc, char *argv[])
     // }
     // Parse command-line arguments
     if (parse_arguments(argc, argv, &data))
-    {
         return 1;
-    }
     // Initialize forks
     if (initialize_forks(&data))
-    {
         return 1;
-    }
 
 	if (pthread_mutex_init(&data.waiter_mutex, NULL) != 0)
 	{
@@ -80,9 +76,7 @@ int main(int argc, char *argv[])
 	data.eating_philosophers = 0;
     // Start simulation
     if (start_simulation(&data))
-    {
         return 1;
-    }
     // Cleanup
 	for (i = 0; i < data.number_of_philosophers; i++)
 	{

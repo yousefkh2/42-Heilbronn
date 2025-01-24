@@ -37,7 +37,7 @@ OBJ = $(SRC:.c=.o)
 HEADERS = philosophers.h
 
 # Executable name
-NAME = philosophers
+NAME = philo
 
 # ------------------------------- Make Targets ------------------------------- #
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:35 by yousef            #+#    #+#             */
-/*   Updated: 2024/12/15 02:46:19 by yousef           ###   ########.fr       */
+/*   Updated: 2025/01/24 00:32:50 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,59 +39,76 @@ int initialize_forks(t_data *data)
 {
     int i;
 
+	i = 0;
+
     data->forks = malloc(data->number_of_philosophers * sizeof(pthread_mutex_t));
     if (!data->forks)
     {
         printf("Memory allocation for forks failed!\n");
         return 1;
     }
-    for (i = 0; i < data->number_of_philosophers; i++)
+    while (i < data->number_of_philosophers)
     {
         if (pthread_mutex_init(&data->forks[i], NULL) != 0)
         {
             printf("Failed to initialize fork mutex %d.\n", i);
             return 1;
         }
+		i++;
     }
     return 0;
 }
-
-// Function to initialize philosopher data and create philosopher threads
-int initialize_philosophers(t_data *data)
+int allocate_philosophers(t_data *data)
 {
-    int i;
-
     data->philosophers = malloc(data->number_of_philosophers * sizeof(t_philosopher));
     if (!data->philosophers)
     {
         printf("Memory allocation for philosophers failed!\n");
         return 1;
     }
-	data->start_time = get_current_time();
-    for (i = 0; i < data->number_of_philosophers; i++)
-    {
-        data->philosophers[i].id = i + 1;
-        // data->philosophers[i].last_meal_time = data->start_time;
-        data->philosophers[i].meals_eaten = 0;
-        data->philosophers[i].left_fork = &data->forks[i];
-        data->philosophers[i].right_fork = &data->forks[(i + 1) % data->number_of_philosophers];
-        data->philosophers[i].data = data;
+    return 0;
+}
 
-		if (pthread_mutex_init(&data->philosophers[i].meal_mutex, NULL) != 0)
-		{
-			perror("Failed to initialize philosopher's meal mutex");
+
+int initialize_philosopher(t_philosopher *philosopher, t_data *data, int id)
+{
+    philosopher->id = id + 1;
+    philosopher->meals_eaten = 0;
+    philosopher->left_fork = &data->forks[id];
+    philosopher->right_fork = &data->forks[(id + 1) % data->number_of_philosophers];
+    philosopher->data = data;
+
+    if (pthread_mutex_init(&philosopher->meal_mutex, NULL) != 0)
+    {
+        perror("Failed to initialize philosopher's meal mutex");
+        return 1;
+    }
+    	philosopher->last_meal_time = data->start_time;
+    return 0;
+}
+
+
+// Function to initialize philosopher data and create philosopher threads
+int initialize_philosophers(t_data *data)
+{
+    int i;
+    if (allocate_philosophers(data) != 0)
+        return 1;
+	gettimeofday(&data->time_start, NULL);
+	data->start_time = data->time_start.tv_sec * 1000 
+                 + data->time_start.tv_usec / 1000;
+	i = 0;
+    while (i < data->number_of_philosophers)
+    {
+		if (initialize_philosopher(&data->philosophers[i], data, i))
 			return 1;
-		}
-		
-		pthread_mutex_lock(&data->philosophers[i].meal_mutex);
-    	data->philosophers[i].last_meal_time = data->start_time;
-    	pthread_mutex_unlock(&data->philosophers[i].meal_mutex);
         
 		if (pthread_create(&data->philosophers[i].thread, NULL, philosopher_routine, (void *)&data->philosophers[i]) != 0)
         {
             perror("Failed to create philosopher thread");
             return 1;
         }
+		i++;
     }
     return 0;
 }

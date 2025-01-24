@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:13 by yousef            #+#    #+#             */
-/*   Updated: 2024/12/15 03:15:03 by yousef           ###   ########.fr       */
+/*   Updated: 2025/01/24 01:07:04 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 void *philosopher_routine(void *arg)
 {
     t_philosopher *ph = (t_philosopher *)arg;
-    pthread_mutex_t *first_fork, *second_fork;
+    pthread_mutex_t *first_fork;
+	pthread_mutex_t *second_fork;
     long time_to_think;
 
     // Wait until all threads have been created and the start time has been reached
-    sim_start_delay(ph->data->start_time);
+    // sim_start_delay(ph->data->start_time);
 
     // Initialize last_meal_time
     // pthread_mutex_lock(&ph->meal_mutex);
@@ -45,13 +46,13 @@ void *philosopher_routine(void *arg)
     //     second_fork = ph->left_fork;
     // }
 	int left_id = ph->id - 1;
-	int right_id = (ph->id) % data->number_of_philosophers;
+    int right_id = (ph->id) % ph->data->number_of_philosophers;
 	if (left_id < right_id) {
-		first_fork = &data->forks[left_id];
-		second_fork = &data->forks[right_id];
+		first_fork = &ph->data->forks[left_id];
+		second_fork = &ph->data->forks[right_id];
 	} else {
-		first_fork = &data->forks[right_id];
-		second_fork = &data->forks[left_id];
+		first_fork = &ph->data->forks[right_id];
+		second_fork = &ph->data->forks[left_id];
 	}
 
     while (1)
@@ -73,11 +74,12 @@ void *philosopher_routine(void *arg)
         long time_since_last_meal = get_current_time() - ph->last_meal_time;
         pthread_mutex_unlock(&ph->meal_mutex);
 
-        time_to_think = (ph->data->time_to_die - time_since_last_meal - ph->data->time_to_eat) / 2;
-        if (time_to_think < 0)
-            time_to_think = 0;
-        if (time_to_think > 600)
-            time_to_think = 200;
+        // time_to_think = (ph->data->time_to_die - time_since_last_meal - ph->data->time_to_eat) / 2;
+        // if (time_to_think < 0)
+        //     time_to_think = 0;
+        // if (time_to_think > 600)
+        //     time_to_think = 200;
+		// there shouldn't time to think here. wrong assumption.
 
         // Use philo_sleep instead of usleep
         philo_sleep(ph->data, time_to_think);
@@ -126,3 +128,5 @@ void *philosopher_routine(void *arg)
 
     return NULL;
 }
+
+
