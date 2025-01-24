@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:16 by yousef            #+#    #+#             */
-/*   Updated: 2025/01/24 01:07:12 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:54:23 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void print_status(t_data *data, int philosopher_id, char *status)
     }
     pthread_mutex_unlock(&data->stop_mutex);
 
-    timestamp = get_current_time(data) - data->start_time;
+    timestamp = get_current_time(data);
     printf("%ld %d %s\n", timestamp, philosopher_id, status);
     pthread_mutex_unlock(&data->print_mutex);
 }

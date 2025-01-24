@@ -3,24 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:13 by yousef            #+#    #+#             */
-/*   Updated: 2025/01/24 01:07:04 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:36:48 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-
-// Philosopher thread routine
-// Philosopher thread routine
 void *philosopher_routine(void *arg)
 {
     t_philosopher *ph = (t_philosopher *)arg;
     pthread_mutex_t *first_fork;
 	pthread_mutex_t *second_fork;
-    long time_to_think;
+    // long time_to_think;
 
     // Wait until all threads have been created and the start time has been reached
     // sim_start_delay(ph->data->start_time);
@@ -32,19 +29,10 @@ void *philosopher_routine(void *arg)
 
     // Small initial stagger if even
     if (ph->id % 2 == 0)
-        philo_sleep(ph->data, 1);
+	{
+		philo_sleep(ph->data, 1);
+	}
 
-    // Determine fork order
-    // if (ph->left_fork < ph->right_fork)
-    // {
-    //     first_fork = ph->left_fork;
-    //     second_fork = ph->right_fork;
-    // }
-    // else
-    // {
-    //     first_fork = ph->right_fork;
-    //     second_fork = ph->left_fork;
-    // }
 	int left_id = ph->id - 1;
     int right_id = (ph->id) % ph->data->number_of_philosophers;
 	if (left_id < right_id) {
@@ -70,9 +58,9 @@ void *philosopher_routine(void *arg)
         print_status(ph->data, ph->id, "is thinking");
 
         // Compute time_to_think as before
-        pthread_mutex_lock(&ph->meal_mutex);
-        long time_since_last_meal = get_current_time() - ph->last_meal_time;
-        pthread_mutex_unlock(&ph->meal_mutex);
+        // pthread_mutex_lock(&ph->meal_mutex);
+        // long time_since_last_meal = get_current_time() - ph->last_meal_time;
+        // pthread_mutex_unlock(&ph->meal_mutex);
 
         // time_to_think = (ph->data->time_to_die - time_since_last_meal - ph->data->time_to_eat) / 2;
         // if (time_to_think < 0)
@@ -82,7 +70,7 @@ void *philosopher_routine(void *arg)
 		// there shouldn't time to think here. wrong assumption.
 
         // Use philo_sleep instead of usleep
-        philo_sleep(ph->data, time_to_think);
+        // philo_sleep(ph->data, time_to_think);
 		// Wait for permission from the waiter
 		pthread_mutex_lock(&ph->data->waiter_mutex);
 		while (ph->data->eating_philosophers == ph->data->number_of_philosophers - 1)
@@ -101,7 +89,7 @@ void *philosopher_routine(void *arg)
 
         // Eat
         pthread_mutex_lock(&ph->meal_mutex);
-        ph->last_meal_time = get_current_time();
+        ph->last_meal_time = get_current_time(ph->data);
         print_status(ph->data, ph->id, "is eating");
         pthread_mutex_unlock(&ph->meal_mutex);
 

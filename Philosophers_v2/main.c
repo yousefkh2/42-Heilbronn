@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:34:05 by yousef            #+#    #+#             */
-/*   Updated: 2025/01/20 15:06:40 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:13:11 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,9 @@ int main(int argc, char *argv[])
         return 1;
     // Initialize forks
     if (initialize_forks(&data))
+	{
         return 1;
+	}
 
 	if (pthread_mutex_init(&data.waiter_mutex, NULL) != 0)
 	{

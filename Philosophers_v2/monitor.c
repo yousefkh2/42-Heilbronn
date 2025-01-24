@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:45 by yousef            #+#    #+#             */
-/*   Updated: 2025/01/23 23:11:26 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/01/24 11:54:54 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void *check_philosophers(void *arg)
         while (i < data->number_of_philosophers)
         {
             pthread_mutex_lock(&data->philosophers[i].meal_mutex);
-            current_time = get_current_time();
+            current_time = get_current_time(data);
+			// printf("current time: %ld\n", current_time);
             if ((current_time - data->philosophers[i].last_meal_time) > data->time_to_die)
             {
                 print_status(data, data->philosophers[i].id, "died");

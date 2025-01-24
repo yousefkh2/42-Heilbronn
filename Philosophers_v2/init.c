@@ -3,24 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:35 by yousef            #+#    #+#             */
-/*   Updated: 2025/01/24 00:32:50 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/01/24 12:23:49 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+
+static int is_digit(char c) {
+    return c >= '0' && c <= '9';
+}
+static int is_positive_number(const char *str) {
+    int i = 0;
+
+    if (str[i] == '+')
+        i++;
+    if (!str[i])
+        return 0;
+    while (str[i]) {
+        if (!is_digit((unsigned char)str[i]))
+            return 0;
+        i++;
+    }
+    return 1;
+}
+
+
 // Function to parse command-line arguments
 int parse_arguments(int argc, char **argv, t_data *data)
 {
+	int i = 1;
     if (argc < 5 || argc > 6)
     {
         printf("Usage: ./philosophers <number_of_philosophers> <time_to_die> ");
         printf("<time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]\n");
         return 1;
     }
+
+	while (i < argc)
+    {
+        if (!is_positive_number(argv[i]))
+        {
+            printf("Error: Argument %d ('%s') is not a valid positive number.\n", i, argv[i]);
+            return 1;
+        }
+		i++;
+    }
+	
     data->number_of_philosophers = atoi(argv[1]);
     if (data->number_of_philosophers <= 0)
         return 1;
@@ -93,10 +125,12 @@ int initialize_philosophers(t_data *data)
 {
     int i;
     if (allocate_philosophers(data) != 0)
-        return 1;
+        {
+			return 1;
+		}
 	gettimeofday(&data->time_start, NULL);
-	data->start_time = data->time_start.tv_sec * 1000 
-                 + data->time_start.tv_usec / 1000;
+	data->start_time = data->time_start.tv_sec * 1000 + data->time_start.tv_usec / 1000;
+	printf("Start time: %ld\n", data->start_time);
 	i = 0;
     while (i < data->number_of_philosophers)
     {

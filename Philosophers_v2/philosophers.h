@@ -59,7 +59,7 @@ void    *philosopher_routine(void *arg);
 void    *check_philosophers(void *arg);
 
 // Utility functions
-long    get_current_time(void);
+long    get_current_time(t_data *data);
 void    print_status(t_data *data, int philosopher_id, char *status);
 void sim_start_delay(long start_time);
 void philo_sleep(t_data *data, long sleep_time_ms);
