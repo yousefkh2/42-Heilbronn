@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:16 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/15 01:53:31 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/15 17:02:03 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@ long get_current_time(t_data *data)
     gettimeofday(&current, NULL);
     now = current.tv_sec * 1000 + current.tv_usec / 1000;
     return (now - data->start_time); 
-}
-//
-
-// Function to print philosopher status with synchronized access
-void print_status(t_data *data, int philosopher_id, char *status)
-{
-    long timestamp = get_current_time(data);
-    enqueue_message(&data->print_queue, timestamp, philosopher_id, status);
 }
 
 /**
@@ -62,19 +54,5 @@ void philo_sleep(t_data *data, long sleep_time_ms)
 //         usleep(100);
 // }
 
-void *print_thread(void *arg)
-{
-    t_data *data = (t_data *)arg;
-    t_message message;
 
-    while (!data->simulation_stopped)
-    {
-        if (dequeue_message(&data->print_queue, &message))
-        {
-            printf("%ld %d %s\n", message.timestamp, message.philosopher_id, message.status);
-            free(message.status);  // Don't forget to free the memory allocated for status
-        }
-        usleep(1000);  // Adjust this to control how often to print
-    }
-    return NULL;
-}
+

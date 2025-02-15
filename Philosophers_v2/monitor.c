@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:45 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/14 20:50:18 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/15 16:26:30 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int check_for_deaths(t_data *data)
     int i;
     long current_time;
 
-    for (i = 0; i < data->number_of_philosophers; i++)
+    i = 0;
+    while (i < data->number_of_philosophers)
     {
         pthread_mutex_lock(&data->philosophers[i].meal_mutex);
         current_time = get_current_time(data);
@@ -40,6 +41,7 @@ static int check_for_deaths(t_data *data)
             return 1;
         }
         pthread_mutex_unlock(&data->philosophers[i].meal_mutex);
+        i++;
     }
     return 0;
 }
@@ -60,7 +62,8 @@ static int check_if_all_ate(t_data *data)
     if (data->number_of_times_each_philosopher_must_eat == -1)
         return 0;
 
-    for (i = 0; i < data->number_of_philosophers; i++)
+    i = 0;
+    while (i < data->number_of_philosophers)
     {
         pthread_mutex_lock(&data->philosophers[i].meal_mutex);
         if (data->philosophers[i].meals_eaten < data->number_of_times_each_philosopher_must_eat)
@@ -69,6 +72,7 @@ static int check_if_all_ate(t_data *data)
             return 0;
         }
         pthread_mutex_unlock(&data->philosophers[i].meal_mutex);
+        i++;
     }
     pthread_mutex_lock(&data->stop_mutex);
     data->simulation_stopped = 1;

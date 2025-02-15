@@ -27,7 +27,6 @@ typedef struct s_print_queue
     pthread_mutex_t mutex;
 } t_print_queue;
 
-// Structure to hold philosopher data
 typedef struct s_philosopher
 {
     int             id;
@@ -40,7 +39,6 @@ typedef struct s_philosopher
     struct s_data   *data;
 }               t_philosopher;
 
-// Structure to hold simulation data
 typedef struct s_data
 {
     int             number_of_philosophers;
@@ -56,8 +54,6 @@ typedef struct s_data
     pthread_mutex_t print_mutex;
     t_philosopher   *philosophers;
 	t_print_queue   print_queue;
-
-    // Waiter variables
     pthread_mutex_t waiter_mutex;
     pthread_cond_t  waiter_cond;
     int             eating_philosophers; // number of philosophers currently eating
@@ -67,7 +63,7 @@ typedef struct s_data
 // Function declarations
 
 // Initialization functions
-void init_print_queue(t_print_queue *queue);
+void	init_print_queue(t_print_queue *queue);
 int     parse_arguments(int argc, char **argv, t_data *data);
 int     initialize_forks(t_data *data);
 int     init_and_create_thread_philosophers(t_data *data);
@@ -86,7 +82,7 @@ void    print_status(t_data *data, int philosopher_id, char *status);
 // void sim_start_delay(long start_time);
 void philo_sleep(t_data *data, long sleep_time_ms);
 //queue functions
-void enqueue_message(t_print_queue *queue, long timestamp, int philosopher_id, const char *status);
+void enqueue_message(t_print_queue *queue, long timestamp, int philosopher_id, char *status);
 int dequeue_message(t_print_queue *queue, t_message *message);
 
 #endif
