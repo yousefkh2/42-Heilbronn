@@ -9,6 +9,24 @@
 #include <sys/time.h>
 #include <unistd.h>
 
+
+#define MAX_QUEUE_SIZE 1000
+
+typedef struct s_message
+{
+    long timestamp;
+    int philosopher_id;
+    char *status;
+} t_message;
+
+typedef struct s_print_queue
+{
+    t_message messages[MAX_QUEUE_SIZE];
+    int head;
+    int tail;
+    pthread_mutex_t mutex;
+} t_print_queue;
+
 // Structure to hold philosopher data
 typedef struct s_philosopher
 {
@@ -37,6 +55,7 @@ typedef struct s_data
     pthread_mutex_t *forks;
     pthread_mutex_t print_mutex;
     t_philosopher   *philosophers;
+	t_print_queue   print_queue;
 
     // Waiter variables
     pthread_mutex_t waiter_mutex;
@@ -48,19 +67,26 @@ typedef struct s_data
 // Function declarations
 
 // Initialization functions
+void init_print_queue(t_print_queue *queue);
 int     parse_arguments(int argc, char **argv, t_data *data);
 int     initialize_forks(t_data *data);
-int     initialize_philosophers(t_data *data);
+int     init_and_create_thread_philosophers(t_data *data);
+int     initialize_philosopher(t_philosopher *philosopher, t_data *data, int id);
+
 
 // Philosopher routines
 void    *philosopher_routine(void *arg);
-
+void *print_thread(void *arg);
 // Monitor routines
 void    *check_philosophers(void *arg);
 
 // Utility functions
 long    get_current_time(t_data *data);
 void    print_status(t_data *data, int philosopher_id, char *status);
-void sim_start_delay(long start_time);
+// void sim_start_delay(long start_time);
 void philo_sleep(t_data *data, long sleep_time_ms);
+//queue functions
+void enqueue_message(t_print_queue *queue, long timestamp, int philosopher_id, const char *status);
+int dequeue_message(t_print_queue *queue, t_message *message);
+
 #endif
