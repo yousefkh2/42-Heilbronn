@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:13 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/14 20:25:54 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/15 18:07:46 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,12 +135,37 @@ static void put_down_forks(pthread_mutex_t *first_fork, pthread_mutex_t *second_
     pthread_mutex_unlock(first_fork);
 }
 
+// Add the following new static function
+static void handle_single_philosopher(t_philosopher *ph)
+{
+    // Pick up the only available fork
+    pthread_mutex_lock(&ph->data->forks[ph->id - 1]);
+    print_status(ph->data, ph->id, "has taken a fork");
+    // Sleep until the philosopher dies
+    philo_sleep(ph->data, ph->data->time_to_die);
+    print_status(ph->data, ph->id, "died");
+    
+    // Signal the simulation should stop
+    pthread_mutex_lock(&ph->data->stop_mutex);
+    ph->data->simulation_stopped = 1;
+    pthread_mutex_unlock(&ph->data->stop_mutex);
+    
+    pthread_mutex_unlock(&ph->data->forks[ph->id - 1]);
+}
+
 void *philosopher_routine(void *arg)
 {
     t_philosopher *ph = (t_philosopher *)arg;
     pthread_mutex_t *first_fork;
 	pthread_mutex_t *second_fork;
 
+    // Handle the one philosopher case
+    if (ph->data->number_of_philosophers == 1)
+    {
+        handle_single_philosopher(ph);
+        return NULL;
+    }
+    
     // Small initial stagger if even
     if (ph->id % 2 == 0)
 		philo_sleep(ph->data, 1);
