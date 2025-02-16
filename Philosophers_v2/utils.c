@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:16 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/15 17:02:03 by yousef           ###   ########.fr       */
+/*   Updated: 2025/02/16 01:48:32 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ long get_current_time(t_data *data)
 {
     struct timeval current;
     long now;
+	long result;
 
     gettimeofday(&current, NULL);
     now = current.tv_sec * 1000 + current.tv_usec / 1000;
-    return (now - data->start_time); 
+	result = now - data->start_time;
+    return (result); 
 }
 
 /**
@@ -44,9 +46,10 @@ void philo_sleep(t_data *data, long sleep_time_ms)
         pthread_mutex_unlock(&data->stop_mutex);
         if (stop)
             break;
-        usleep(100); // sleep in increments of 100 microseconds
+        usleep(1000); // sleep in increments of 100 microseconds
     }
 }
+
 
 // void sim_start_delay(t_data *data, long start_time)
 // {

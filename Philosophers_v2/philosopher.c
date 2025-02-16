@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:13 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/15 18:07:46 by yousef           ###   ########.fr       */
+/*   Updated: 2025/02/16 06:24:52 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ static int simulation_stopped(t_data *data)
  *
  * @param ph Pointer to the current philosopher.
  */
-static void wait_for_waiter_permission(t_philosopher *ph)
-{
-	pthread_mutex_lock(&ph->data->waiter_mutex);
-	while (ph->data->eating_philosophers == ph->data->number_of_philosophers - 1)
-		pthread_cond_wait(&ph->data->waiter_cond, &ph->data->waiter_mutex);
-	ph->data->eating_philosophers++;
-	pthread_mutex_unlock(&ph->data->waiter_mutex);
-}
+// static void wait_for_waiter_permission(t_philosopher *ph)
+// {
+// 	pthread_mutex_lock(&ph->data->waiter_mutex);
+// 	while (ph->data->eating_philosophers == ph->data->number_of_philosophers - 1)
+// 		pthread_cond_wait(&ph->data->waiter_cond, &ph->data->waiter_mutex);
+// 	ph->data->eating_philosophers++;
+// 	pthread_mutex_unlock(&ph->data->waiter_mutex);
+// }
 
 /**
  * @brief Signals the waiter that the philosopher has finished eating.
@@ -83,13 +83,13 @@ static void wait_for_waiter_permission(t_philosopher *ph)
  *
  * @param ph Pointer to the current philosopher.
  */
-static void signal_waiter(t_philosopher *ph)
-{
-    pthread_mutex_lock(&ph->data->waiter_mutex);
-    ph->data->eating_philosophers--;
-    pthread_cond_broadcast(&ph->data->waiter_cond);
-    pthread_mutex_unlock(&ph->data->waiter_mutex);
-}
+// static void signal_waiter(t_philosopher *ph)
+// {
+//     pthread_mutex_lock(&ph->data->waiter_mutex);
+//     ph->data->eating_philosophers--;
+//     pthread_cond_broadcast(&ph->data->waiter_cond);
+//     pthread_mutex_unlock(&ph->data->waiter_mutex);
+// }
 
 /**
  * @brief Simulates the philosopher eating.
@@ -138,9 +138,9 @@ static void put_down_forks(pthread_mutex_t *first_fork, pthread_mutex_t *second_
 // Add the following new static function
 static void handle_single_philosopher(t_philosopher *ph)
 {
-    // Pick up the only available fork
     pthread_mutex_lock(&ph->data->forks[ph->id - 1]);
     print_status(ph->data, ph->id, "has taken a fork");
+    pthread_mutex_unlock(&ph->data->forks[ph->id - 1]);
     // Sleep until the philosopher dies
     philo_sleep(ph->data, ph->data->time_to_die);
     print_status(ph->data, ph->id, "died");
@@ -150,7 +150,6 @@ static void handle_single_philosopher(t_philosopher *ph)
     ph->data->simulation_stopped = 1;
     pthread_mutex_unlock(&ph->data->stop_mutex);
     
-    pthread_mutex_unlock(&ph->data->forks[ph->id - 1]);
 }
 
 void *philosopher_routine(void *arg)
@@ -175,11 +174,11 @@ void *philosopher_routine(void *arg)
         if (simulation_stopped(ph->data))
 			break;
         print_status(ph->data, ph->id, "is thinking");
-		wait_for_waiter_permission(ph);
+		// wait_for_waiter_permission(ph);
 		pick_up_forks(ph, first_fork, second_fork);
 		eat(ph);
 		put_down_forks(first_fork, second_fork);
-		signal_waiter(ph);
+		// signal_waiter(ph);
         print_status(ph->data, ph->id, "is sleeping");
         philo_sleep(ph->data, ph->data->time_to_sleep);
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:45 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/15 16:26:30 by yousef           ###   ########.fr       */
+/*   Updated: 2025/02/16 06:23:37 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int check_for_deaths(t_data *data)
     int i;
     long current_time;
 
-    i = 0;
+	i = 0;
     while (i < data->number_of_philosophers)
     {
         pthread_mutex_lock(&data->philosophers[i].meal_mutex);
@@ -41,10 +41,39 @@ static int check_for_deaths(t_data *data)
             return 1;
         }
         pthread_mutex_unlock(&data->philosophers[i].meal_mutex);
-        i++;
+		i++;
     }
     return 0;
 }
+
+// static int check_for_deaths(t_data *data)
+// {
+//     int i;
+//     long current_time;
+//     int died_philosopher_id; // Local copy of the id
+// 	long last_meal_time;
+
+//     i = 0;
+//     current_time = get_current_time(data);
+//     while (i < data->number_of_philosophers)
+//     {
+// 		pthread_mutex_lock(&data->philosophers[i].meal_mutex);
+// 		last_meal_time = data->philosophers[i].last_meal_time; 
+// 		pthread_mutex_unlock(&data->philosophers[i].meal_mutex);
+//         if ((current_time - last_meal_time) > data->time_to_die)
+//         {
+//             died_philosopher_id = data->philosophers[i].id;
+//             print_status(data, died_philosopher_id, "died");
+//             pthread_mutex_lock(&data->stop_mutex);
+//             data->simulation_stopped = 1;
+//             pthread_mutex_unlock(&data->stop_mutex);
+//             return 1;
+//         }
+//         // pthread_mutex_unlock(&data->philosophers[i].meal_mutex);
+//         i++;
+//     }
+//     return 0;
+// }
 
 /**
  * @brief Checks if all philosophers have eaten the required number of times.
@@ -61,8 +90,7 @@ static int check_if_all_ate(t_data *data)
 
     if (data->number_of_times_each_philosopher_must_eat == -1)
         return 0;
-
-    i = 0;
+	i = 0;
     while (i < data->number_of_philosophers)
     {
         pthread_mutex_lock(&data->philosophers[i].meal_mutex);
@@ -72,7 +100,7 @@ static int check_if_all_ate(t_data *data)
             return 0;
         }
         pthread_mutex_unlock(&data->philosophers[i].meal_mutex);
-        i++;
+		i++;
     }
     pthread_mutex_lock(&data->stop_mutex);
     data->simulation_stopped = 1;

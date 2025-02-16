@@ -6,7 +6,7 @@
 /*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:35 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/15 01:58:11 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/16 06:02:35 by ykhattab         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,13 +161,12 @@ int initialize_philosopher(t_philosopher *philosopher, t_data *data, int id)
     philosopher->left_fork = &data->forks[id];
     philosopher->right_fork = &data->forks[(id + 1) % data->number_of_philosophers];
     philosopher->data = data;
-
     if (pthread_mutex_init(&philosopher->meal_mutex, NULL) != 0)
     {
         perror("Failed to initialize philosopher's meal mutex");
         return 1;
     }
-    	philosopher->last_meal_time = data->start_time;
+	philosopher->last_meal_time = data->start_time;
     return 0;
 }
 

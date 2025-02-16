@@ -20,7 +20,8 @@ CC = gcc
 # -Wextra: Enable extra warnings
 # -Werror: Treat warnings as errors
 # -pthread: Enable POSIX threads
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread 
+# -fsanitize=thread
 
 # Optional: Add debugging symbols
 # CFLAGS += -g
