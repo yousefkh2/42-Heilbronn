@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosopher.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:13 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/16 06:24:52 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:37:01 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,14 +158,12 @@ void *philosopher_routine(void *arg)
     pthread_mutex_t *first_fork;
 	pthread_mutex_t *second_fork;
 
-    // Handle the one philosopher case
     if (ph->data->number_of_philosophers == 1)
     {
         handle_single_philosopher(ph);
         return NULL;
     }
     
-    // Small initial stagger if even
     if (ph->id % 2 == 0)
 		philo_sleep(ph->data, 1);
 	get_fork_order(ph, &first_fork, &second_fork);
@@ -174,11 +172,9 @@ void *philosopher_routine(void *arg)
         if (simulation_stopped(ph->data))
 			break;
         print_status(ph->data, ph->id, "is thinking");
-		// wait_for_waiter_permission(ph);
 		pick_up_forks(ph, first_fork, second_fork);
 		eat(ph);
 		put_down_forks(first_fork, second_fork);
-		// signal_waiter(ph);
         print_status(ph->data, ph->id, "is sleeping");
         philo_sleep(ph->data, ph->data->time_to_sleep);
     }

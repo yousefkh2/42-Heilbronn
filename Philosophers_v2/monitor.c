@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:33:45 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/16 06:23:37 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/16 07:21:42 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int check_if_all_ate(t_data *data)
     int i;
 
     if (data->number_of_times_each_philosopher_must_eat == -1)
-        return 0;
+        {return 0;}
 	i = 0;
     while (i < data->number_of_philosophers)
     {

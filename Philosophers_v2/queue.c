@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   queue.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/14 22:42:07 by ykhattab          #+#    #+#             */
-/*   Updated: 2025/02/16 06:29:19 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:46:33 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ void init_print_queue(t_print_queue *queue)
 /** 
  * Retrieves the current timestamp and enqueues the given philosopher status message.
  */
-// Function to print philosopher status with synchronized access
 void print_status(t_data *data, int philosopher_id, char *status)
 {
     long timestamp;
-    pthread_mutex_lock(&data->stop_mutex); // Use stop_mutex here
+    pthread_mutex_lock(&data->stop_mutex);
     if (!data->simulation_stopped)
     {
         pthread_mutex_unlock(&data->stop_mutex);
@@ -58,7 +57,6 @@ void enqueue_message(t_print_queue *queue, long timestamp, int philosopher_id, c
     if ((queue->tail + 1) % MAX_QUEUE_SIZE == queue->head)
     {
 		queue->head = (queue->head + 1) % MAX_QUEUE_SIZE;
-        // Queue is full, handle this scenario if needed (e.g., drop message or resize queue)
     }
     else
     {
@@ -107,27 +105,17 @@ void *print_thread(void *arg)
             break;
         if (dequeue_message(&data->print_queue, &message))
         {
-			pthread_mutex_lock(&data->print_mutex);
             printf("%ld %d %s\n", message.timestamp, message.philosopher_id, message.status);
-			pthread_mutex_unlock(&data->print_mutex);
-
 			if (strcmp(message.status, "died") == 0)
             {
                 pthread_mutex_lock(&data->stop_mutex);
                 data->death_printed = 1;
-				data->simulation_stopped = 1; // new
+				data->simulation_stopped = 1;
                 pthread_mutex_unlock(&data->stop_mutex);
 				break;
             }
         }
-		// pthread_mutex_unlock(&data->print_mutex);
-		// else
-		// {
 		usleep(100);
-		// }
     }
-	// pthread_mutex_lock(&data->print_queue.mutex);
-    // // Finish any last messages if needed
-    // pthread_mutex_unlock(&data->print_queue.mutex);
     return NULL;
 }

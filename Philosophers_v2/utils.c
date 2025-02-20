@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:16 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/16 01:48:32 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:44:50 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-// Function to get the current timestamp in milliseconds
 long get_current_time(t_data *data)
 {
     struct timeval current;
@@ -46,16 +45,6 @@ void philo_sleep(t_data *data, long sleep_time_ms)
         pthread_mutex_unlock(&data->stop_mutex);
         if (stop)
             break;
-        usleep(1000); // sleep in increments of 100 microseconds
+        usleep(100);
     }
 }
-
-
-// void sim_start_delay(t_data *data, long start_time)
-// {
-//     while (get_current_time(data) < start_time)
-//         usleep(100);
-// }
-
-
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ykhattab <ykhattab@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yousef <yousef@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:34:05 by yousef            #+#    #+#             */
-/*   Updated: 2025/02/16 06:27:00 by ykhattab         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:20:15 by yousef           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ int start_simulation(t_data *data, pthread_t print_thread_id)
  */
 static int initialize_mutexes(t_data *data)
 {
-	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
-    {
-        printf("Failed to initialize print mutex.\n");
-        return 1;
-    }	
+	// if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
+    // {
+    //     printf("Failed to initialize print mutex.\n");
+    //     return 1;
+    // }	
 	init_print_queue(&data->print_queue);
     if (pthread_mutex_init(&data->stop_mutex, NULL) != 0)
     {
@@ -110,7 +110,7 @@ static void cleanup_simulation(t_data *data)
         pthread_mutex_destroy(&data->philosophers[i].meal_mutex);
         i++;
     }
-    pthread_mutex_destroy(&data->print_mutex);
+    // pthread_mutex_destroy(&data->print_mutex);
     pthread_mutex_destroy(&data->stop_mutex);
     // pthread_mutex_destroy(&data->waiter_mutex);
     // pthread_cond_destroy(&data->waiter_cond);
@@ -145,5 +145,3 @@ int main(int argc, char *argv[])
 	free(data);
     	{return 0;}
 }
-
-
