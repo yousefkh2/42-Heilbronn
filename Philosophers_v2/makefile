@@ -29,7 +29,7 @@ CFLAGS = -Wall -Wextra -Werror -pthread
 # ------------------------------- Project Files ------------------------------ #
 
 # Source files
-SRC = init.c main.c monitor.c philosopher.c utils.c queue.c
+SRC = init.c main.c monitor.c philosopher.c utils.c queue.c utils2.c
 
 # Object files (replace .c with .o)
 OBJ = $(SRC:.c=.o)
